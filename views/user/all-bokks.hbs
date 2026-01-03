@@ -1,0 +1,26 @@
+<div class="container mt-5" dir="rtl">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form action="/search" method="GET" class="d-flex shadow-sm">
+                <input class="form-control border-0 py-3" type="search" name="q" placeholder="ഇവിടെ തിരയുക... (Search by Name, Author, Category)">
+                <button class="btn btn-primary px-5" type="submit">بحث (Search)</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {{#each books}}
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-end">
+                    <h5 class="fw-bold">{{this.Title}}</h5>
+                    <p class="mb-1 text-muted">المؤلف (Author): {{this.Author}}</p>
+                    <p class="mb-1">المجلد (Vol): {{this.Vol}}</p>
+                    <p class="mb-1 small">الناشر (Publisher): {{this.Publisher}}</p>
+                    <span class="badge bg-light text-primary border">{{this.Category}}</span>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

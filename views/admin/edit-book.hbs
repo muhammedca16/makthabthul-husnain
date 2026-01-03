@@ -1,0 +1,58 @@
+<section class="py-5 bg-light min-vh-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-7">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-danger text-white text-center py-4 border-0">
+                        <h3 class="mb-0 fw-bold arabic-font">تعديل الكتاب (Edit Book)</h3>
+                    </div>
+                    <div class="card-body p-4 p-md-5 bg-white" dir="rtl">
+                        <form action="/admin/edit-book/{{book._id}}" method="POST">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3 text-end">
+                                    <label class="fw-bold">اسم الكتاب</label>
+                                    <input type="text" name="book_name" class="form-control py-2 text-end arabic-font" value="{{book.book_name}}" required>
+                                </div>
+                                <div class="col-md-6 mb-3 text-end">
+                                    <label class="fw-bold">المؤلف</label>
+                                    <input type="text" name="author" class="form-control py-2 text-end arabic-font" value="{{book.author}}" required>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-end">
+                                <div class="col-md-8 mb-3 text-end">
+                                    <label class="fw-bold">التصنيف</label>
+                                    <select name="category" class="form-select py-2 text-end arabic-font" required>
+                                        <option value="{{book.category}}" selected>{{book.category}} (Current)</option>
+                                        {{#each categories}}
+                                            <option value="{{this.name}}">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3 text-end">
+                                    <label class="fw-bold">الجزء</label>
+                                    <input type="text" name="vol" class="form-control py-2 text-center" value="{{book.vol}}">
+                                </div>
+                            </div>
+
+                            <div class="mb-4 text-end">
+                                <label class="fw-bold">الناشر</label>
+                                <input type="text" name="publishers" class="form-control py-2 text-end arabic-font" value="{{book.publishers}}">
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-md-8">
+                                    <button type="submit" class="btn btn-success w-100 py-2 fw-bold shadow-sm">تحديث (Update)</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="/admin" class="btn btn-outline-secondary w-100 py-2">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

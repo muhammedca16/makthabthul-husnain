@@ -1,0 +1,29 @@
+<section class="vh-100 d-flex align-items-center bg-success">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5 col-lg-4">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header bg-danger text-white text-center py-4 border-0">
+                        <h4 class="mb-0 fw-bold">Admin Login</h4>
+                    </div>
+                    <div class="card-body p-4 bg-white">
+                        <form action="/admin/login" method="POST">
+                            {{#if loginErr}}
+                                <div class="alert alert-danger py-2 small">{{loginErr}}</div>
+                            {{/if}}
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">Username</label>
+                                <input type="text" name="Email" class="form-control" placeholder="Admin Username" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label small fw-bold">Password</label>
+                                <input type="password" name="Password" class="form-control" placeholder="Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100 py-2 fw-bold shadow-sm">Login Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

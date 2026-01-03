@@ -1,0 +1,129 @@
+<header class="bg-success hero-wrap">
+    <div></div>
+    <div class="hero-content container text-center text-white">
+        <h1 class="display-3 fw-bold mb-2">مكتبة الحسنين</h1>
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8 col-lg-6 search-wrapper position-relative mb-4">
+                <input type="text" id="userSearch" class="form-control form-control-lg shadow pe-5 text-end" 
+           placeholder="ابحث عن كتاب، مؤلف، أو تصنيف..." dir="rtl">
+    <i class="fas fa-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
+            </div>
+        </div>
+
+        <div class="row g-2 justify-content-center px-2 row-cols-3 row-cols-md-4 row-cols-lg-6">
+    {{#each categories}}
+    <div class="col">
+        <a href="{{this.link}}" class="text-decoration-none">
+            <div class="card h-100 border-0 shadow-sm category-card bg-glass py-2">
+                <div class="small fw-bold text-white text-center px-1">
+                    {{this.name}}
+                </div>
+            </div>
+        </a>
+    </div>
+    {{/each}}
+</div>
+    </div>
+</header>
+
+<main class="py-5 bg-light" dir="rtl">
+    <div class="container-fluid px-lg-5">
+        <div class="table-container bg-white shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 text-end">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th class="py-3 text-center" style="width: 50px;">رقم</th>
+                            <th class="py-3">اسم الكتاب</th>
+                            <th class="py-3">المؤلف</th>
+                            <th class="py-3">التصنيف</th>
+                            <th class="py-3">الجزء</th>
+                            <th class="py-3">الناشر</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-end">
+                        {{#each books}}
+                        <tr class="book-row border-bottom bg-white">
+                            <td class="text-center text-muted small border-start">{{addOne @index}}</td>
+                            <td class="fw-bold text-danger">{{this.book_name}}</td>
+                            <td>{{this.author}}</td>
+                            <td><span class="badge rounded-pill bg-light text-dark border fw-normal px-3">{{this.category}}</span></td>
+                            <td class="text-center">{{this.vol}}</td>
+                            <td class="text-muted small">{{this.publishers}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    /* Hero Section */
+    .hero-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 60px 0;
+    }
+    .hero-bg {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: center/cover no-repeat;
+        background-color: rgb(5, 177, 97);
+        filter: blur(8px);
+        transform: scale(1.1);
+        z-index: 1;
+    }
+    .hero-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+    }
+    .hero-content { position: relative; z-index: 3; }
+
+    /* Glassmorphism */
+    .bg-glass {
+        background: rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    /* Category Interaction */
+    .category-card {
+        border-radius: 10px;
+        transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .category-card:hover {
+        transform: translateY(-3px);
+        background: #0d6efd !important;
+    }
+
+    /* Table Design */
+    .table-container { border: 1px solid #eee; }
+    .table thead th { font-weight: 500; font-size: 0.9rem; }
+    .table tbody tr:hover { background-color: #fbfcfe; }
+</style>
+
+<script>
+    document.getElementById('userSearch').addEventListener('input', function(e) {
+        // ടൈപ്പ് ചെയ്യുന്ന വാക്ക് ചെറിയ അക്ഷരങ്ങളിലേക്ക് മാറ്റുന്നു
+        const searchTerm = e.target.value.toLowerCase();
+        // ടേബിളിലെ എല്ലാ പുസ്തക വരികളെയും എടുക്കുന്നു
+        const rows = document.querySelectorAll('.book-row');
+
+        rows.forEach(row => {
+            // വരിയിലെ മുഴുവൻ ടെക്സ്റ്റും പരിശോധിക്കുന്നു
+            const text = row.textContent.toLowerCase();
+            
+            // സെർച്ച് ടേം ഉണ്ടെങ്കിൽ കാണിക്കും, ഇല്ലെങ്കിൽ ഹൈഡ് ചെയ്യും
+            if (text.includes(searchTerm)) {
+                row.style.display = ""; // കാണിക്കുന്നു
+            } else {
+                row.style.display = "none"; // മറയ്ക്കുന്നു
+            }
+        });
+    });
+</script>

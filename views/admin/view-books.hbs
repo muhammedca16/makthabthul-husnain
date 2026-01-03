@@ -1,0 +1,151 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<section class="admin-panel1 py-5 bg-success" dir="rtl">
+    <div class="container">
+        <div class="row align-items-center mb-4 g-3 ">
+            <div class="col-6">
+                <h2 class="fw-bold text-white mb-1">مكتبة الحسنين</h2>
+                <p class="text-white small mb-0">ادارة الكتب والمؤلفين</p>
+            </div>
+            <div class="col-6 text-start">
+                <a href="/admin/add-book" class="btn btn-light px-4 py-2 rounded-3 fw-bold shadow-sm">
+                    <i class="fas fa-plus-circle ms-2"></i>إضافة كتاب
+                </a>
+            </div>
+        </div>
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-body bg-white">
+                <div class="search-wrapper position-relative">
+                    <input type="text" id="adminSearch" class="form-control form-control-lg border-2 shadow-none pe-5 text-end" 
+                           placeholder="بحث عن كتاب، مؤلف، أو تصنيف..." dir="rtl">
+                    <i class="fas fa-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
+                </div>
+            </div>
+        </div>
+        <div class="pt-2 text-center">
+            <span class="text-white">
+                        <i class="fas fa-book me-1"></i> {{bookCount}} كتاب
+                    </span>
+        </div>
+
+        </div>
+    </div>
+</section>
+<section class="admin-panel min-vh-100 mt-2" dir="rtl">
+    <div class="container">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-3 text-end" id="adminTable">
+                    <thead class="custom-header">
+    <tr>
+        <th class="py-3 text-center" style="width: 50px;">رقم</th>
+        <th class="py-3 pe-4 text-white">اسم الكتاب</th>
+        <th class="py-3 text-white">المؤلف</th>
+        <th class="py-3 text-white">التصنيف</th>
+        <th class="py-3">الجزء</th>
+        <th class="py-3 text-center text-white" style="width: 120px;">الخيارات</th>
+    </tr>
+</thead>
+                    <tbody>
+                        {{#each books}}
+                        <tr class="book-row border-bottom bg-white">
+                            <td class="text-center text-muted small border-start">{{addOne @index}}</td>
+                            <td class="pe-4">
+                                <div class="fw-bold text-dark arabic-font fs-5">{{this.book_name}}</div>
+                                <div class="text-muted extra-small">{{this.publishers}}</div>
+                            </td>
+                            
+                            <td class="arabic-font text-secondary">{{this.author}}</td>
+                            
+                            <td>
+                                <span class="badge badge-soft-primary px-3">{{this.category}}</span>
+                            </td>
+                            <td class="text-center">{{this.vol}}</td>
+                            
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="/admin/edit-book/{{this._id}}" class="action-btn edit-btn" title="تعديل">
+                                        <i class="fas fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="/admin/delete-book/{{this._id}}" 
+                                       class="action-btn delete-btn" 
+                                       onclick="return confirm('هل تريد حذف: {{this.book_name}}؟')" title="حذف">
+                                        <i class="fas fa-trash-can"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .arabic-font { font-family: 'UthmanTN', serif !important; }
+    .extra-small { font-size: 0.75rem; }
+
+    /* Custom Badges */
+    .badge-soft-primary {
+        background-color: #f0f4f8;
+        color: #555;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-weight: 400;
+    }
+
+    /* Action Circle Buttons */
+    .action-btn {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.2s;
+        font-size: 0.9rem;
+    }
+    
+    .edit-btn { color: #0d6efd; background-color: #eef2ff; }
+    .edit-btn:hover { background-color: #0d6efd; color: white; }
+    
+    .delete-btn { color: #dc3545; background-color: #fff1f2; }
+    .delete-btn:hover { background-color: #dc3545; color: white; }
+
+    /* Search Input Styling */
+    .form-control-lg {
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+    }
+    .form-control-lg:focus { border-color: #0d6efd; background-color: #fff; }
+
+    /* Table Hover */
+    .book-row:hover { background-color: #fcfdfe !important; }
+
+    /* ടേബിൾ ഹെഡറിലെ ഓരോ കോളത്തിനും ബാക്ക്ഗ്രൗണ്ട് കളർ നൽകുന്നു */
+.custom-header th {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: none;
+}
+
+/* ടേബിളിന്റെ മുകൾ ഭാഗത്തെ മൂലകൾ ഉരുണ്ടിരിക്കാൻ (Optional) */
+.table-responsive {
+    border-radius: 12px 12px 0 0;
+}
+</style>
+
+<script>
+    // Safe Search Script
+    document.getElementById('adminSearch').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('.book-row');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+</script>

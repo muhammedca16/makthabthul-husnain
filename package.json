@@ -1,0 +1,25 @@
+{
+  "name": "makthabthul-husnain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "csvtojson": "^2.0.14",
+    "express": "^5.2.1",
+    "express-handlebars": "^8.0.4",
+    "express-session": "^1.18.2",
+    "hbs": "^4.2.0",
+    "mongodb": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

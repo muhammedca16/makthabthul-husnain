@@ -1,0 +1,86 @@
+<section class="py-5 bg-light min-vh-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-7"> <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    
+                    <div class="card-header bg-danger text-white text-center py-4 border-0">
+                        <h3 class="mb-0 fw-bold arabic-font">إضافة كتاب جديد</h3>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5 bg-white" dir="rtl">
+                        <form action="/admin/add-book" method="POST">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3 text-end">
+                                    <label for="book_name" class="form-label fw-bold">اسم الكتاب</label>
+                                    <input type="text" name="book_name" class="form-control py-2 text-end arabic-font" placeholder="اسم الكتاب..." required>
+                                </div>
+                                <div class="col-md-6 mb-3 text-end">
+                                    <label for="author" class="form-label fw-bold">المؤلف</label>
+                                    <input type="text" name="author" class="form-control py-2 text-end arabic-font" placeholder="المؤلف..." required>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-end">
+                                <div class="col-md-8 mb-3 text-end">
+                                    <label for="category" class="form-label fw-bold">التصنيف</label>
+                                    <select name="category" class="form-select py-2 text-end arabic-font" required>
+                                        <option value="" selected disabled>(Select Category)</option>
+                                        {{#each categories}}
+                                            <option value="{{this.name}}">{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3 text-end">
+                                    <label for="vol" class="form-label fw-bold">الجزء</label>
+                                    <input type="text" name="vol" class="form-control py-2 text-center" placeholder="Vol">
+                                </div>
+                            </div>
+
+                            <div class="mb-4 text-end">
+                                <label for="publishers" class="form-label fw-bold">الناشر</label>
+                                <input type="text" name="publishers" class="form-control py-2 text-end arabic-font" placeholder="الناشر...">
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row g-2">
+                                <div class="col-md-8">
+                                    <button type="submit" class="btn btn-success w-100 py-2 fw-bold shadow-sm">
+                                        <i class="fas fa-save ms-2"></i>حفظ الكتاب
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="/admin" class="btn btn-outline-secondary w-100 py-2">Cancel</a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .arabic-font { font-family: 'UthmanTN', serif !important; }
+
+    /* ഫോം ഫീൽഡുകൾ കൂടുതൽ ഭംഗിയാക്കാൻ */
+    .form-control, .form-select {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #dc3545; /* ഹെഡറുമായി മാച്ച് ചെയ്യാൻ റെഡ് ബോർഡർ */
+        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.1);
+    }
+
+    /* പ്ലേസ് ഹോൾഡർ അറബിക് ആയതുകൊണ്ട് വലതുവശത്ത് വരാൻ */
+    input::placeholder {
+        text-align: right;
+        font-size: 0.85rem;
+    }
+</style>
