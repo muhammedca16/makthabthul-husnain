@@ -7,12 +7,12 @@ module.exports = {
     doLogin: (adminData) => {
     return new Promise(async (resolve, reject) => {
         let response = {};
-        // ഡാറ്റാബേസിൽ ഈ ഇമെയിൽ ഉണ്ടോ എന്ന് നോക്കുന്നു
-        let admin = await db.get().collection(collections.ADMIN_COLLECTION).findOne({ Email: adminData.Email });
+        // ഇമെയിൽ തിരയുമ്പോൾ ചെറിയ അക്ഷരത്തിലുള്ള 'email' ഉപയോഗിക്കുക
+        let admin = await db.get().collection(collections.ADMIN_COLLECTION).findOne({ email: adminData.Email });
 
         if (admin) {
-            // പാസ്‌വേഡ് ഹാഷ് മാച്ച് ചെയ്യുന്നുണ്ടോ എന്ന് നോക്കുന്നു
-            bcrypt.compare(adminData.Password, admin.Password).then((status) => {
+            // പാസ്‌വേഡ് ചെക്ക് ചെയ്യുമ്പോഴും ചെറിയ അക്ഷരത്തിലുള്ള 'password' ഉപയോഗിക്കുക
+            bcrypt.compare(adminData.Password, admin.password).then((status) => {
                 if (status) {
                     response.admin = admin;
                     response.status = true;
