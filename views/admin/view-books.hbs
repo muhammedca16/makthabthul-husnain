@@ -10,6 +10,10 @@
                 <a href="/admin/add-book" class="btn btn-light px-4 py-2 rounded-3 fw-bold shadow-sm">
                     <i class="fas fa-plus-circle ms-2"></i>إضافة كتاب
                 </a>
+                <button id="importBtn" class="btn btn-outline-light px-4 py-2 rounded-3 fw-bold shadow-sm ms-2">
+                    <i class="fas fa-file-csv ms-2"></i>استيراد من CSV
+                </button>
+                <span id="importStatus" class="text-white ms-3"></span>
             </div>
         </div>
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
@@ -148,4 +152,31 @@
             row.style.display = text.includes(searchTerm) ? '' : 'none';
         });
     });
+
+    // Import button handler
+    const importBtn = document.getElementById('importBtn');
+    const importStatus = document.getElementById('importStatus');
+    if (importBtn) {
+        importBtn.addEventListener('click', async function () {
+            if (!confirm('هل تريد استيراد الكتب من ملف CSV الآن؟ قد يؤدي ذلك إلى تكرار السجلات إذا تم تشغيله مرتين.')) return;
+            importBtn.disabled = true;
+            importStatus.textContent = 'جارٍ الاستيراد...';
+            try {
+                const resp = await fetch('/admin/import-books', { method: 'POST', headers: { 'Accept': 'application/json' } });
+                const data = await resp.json();
+                if (data && data.success) {
+                    importStatus.textContent = `استورد ${data.inserted} كتابًا.`;
+                    // refresh page to show new books
+                    setTimeout(() => location.reload(), 1200);
+                } else {
+                    importStatus.textContent = 'فشل الاستيراد.';
+                    importBtn.disabled = false;
+                }
+            } catch (err) {
+                importStatus.textContent = 'خطأ في الاستيراد.';
+                console.error(err);
+                importBtn.disabled = false;
+            }
+        });
+    }
 </script>

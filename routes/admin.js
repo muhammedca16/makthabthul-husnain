@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bookHelpers = require('../helpers/book-helpers');
 const adminHelpers = require('../helpers/admin-helpers');
+const importer = require('../helpers/import-books');
+const conn = require('../config/connection');
+const path = require('path');
 const categories = require('../config/categories'); // പാത്ത് ശ്രദ്ധിക്കുക
 // അഡ്മിൻ പേജുകൾക്ക് സുരക്ഷ നൽകാൻ ഒരു മിഡിൽവെയർ
 const verifyLogin = (req, res, next) => {
@@ -87,6 +90,20 @@ router.post('/login', (req, res) => {
 router.get('/logout',verifyLogin,(req, res) => {
     req.session.admin = null;
     res.redirect('/admin/login');
+});
+
+// Trigger import from CSV (admin only)
+router.post('/import-books', verifyLogin, async (req, res) => {
+    try {
+        // ensure DB connection
+        await conn.connect();
+        const filePath = path.join(__dirname, '..', 'books.csv');
+        const result = await importer.importFromCSV(filePath);
+        res.json({ success: true, inserted: result.insertedCount || 0 });
+    } catch (err) {
+        console.error('Import error:', err);
+        res.status(500).json({ success: false, error: err.message || String(err) });
+    }
 });
 
 // ഇനി നിങ്ങളുടെ എല്ലാ അഡ്മിൻ റൂട്ടുകളിലും verifyLogin ചേർക്കുക

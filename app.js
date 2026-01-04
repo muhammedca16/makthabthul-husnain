@@ -5,6 +5,8 @@ const db = require('./config/connection');
 const adminRouter = require('./routes/admin');
 const userRouter = require('./routes/user');
 const session = require('express-session');
+const PORT = process.env.PORT || 3000;
+
 
 const app = express();
 
@@ -39,15 +41,16 @@ app.use('/', userRouter);
 app.use('/admin', adminRouter);
 
 // Database connection
+// ... ബാക്കി കോഡുകൾക്ക് താഴെ ...
+
+
 db.connect((err) => {
     if (err) {
-        console.log("Database Connection Error: " + err);
+        console.log("Connection failed.." + err);
+        process.exit(1); // കണക്ഷൻ പരാജയപ്പെട്ടാൽ പ്രോസസ്സ് നിർത്തുക
     } else {
-        console.log("Database Connected Successfully");
+        app.listen(PORT, () => {
+            console.log(`🚀 Server started on port ${PORT}`);
+        });
     }
-});
-
-// സെർവർ ഇവിടെ ലിസൺ ചെയ്യുക
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
 });
