@@ -131,15 +131,14 @@
     <div class="container">
         <h1 class="display-3 library-title mb-2">مكتبة الحسنين</h1>
         <!-- Search Bar -->
-        <div class="search-wrapper position-relative mb-5">
+        <div class="search-wrapper position-relative mb-3">
             <input type="text" id="userSearch" class="form-control shadow-lg search-input text-end" 
                    placeholder="ابحث عن كتاب، مؤلف، أو تصنيف..." dir="rtl">
             <i class="fas fa-search search-icon"></i>
         </div>
-
+        <span class="text-white small">إجمالي الكتب: {{books.length}}</span>
         <!-- Categories -->
-        <div class="row g-2 justify-content-center row-cols-3 row-cols-md-6 px-2">
-            <span class="text-muted small">إجمالي الكتب: {{books.length}}</span>
+        <div class="row mt-3 g-2 justify-content-center row-cols-3 row-cols-md-6 px-2">
             {{#each categories}}
             <div class="col">
                 <a href="{{this.link}}" class="text-decoration-none">
@@ -155,7 +154,7 @@
     </div>
 </header>
 
-<main class="py-2" dir="rtl">
+<main class="py-4" dir="rtl">
     <div class="container">
         <!-- Books Grid -->
         <div class="row" id="bookContainer">
